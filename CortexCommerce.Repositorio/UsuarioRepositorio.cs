@@ -10,7 +10,7 @@ namespace CortexCommerce.Repositorio
 {
     public class UsuarioRepositorio : BaseRepositorio, IUsuarioRepositorio
     {
-        protected UsuarioRepositorio(CortexCommerceContexto contexto) : base(contexto)
+        public UsuarioRepositorio(CortexCommerceContexto contexto) : base(contexto)
         {
         }
         public void Criar(Usuario usuario)

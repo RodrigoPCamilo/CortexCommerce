@@ -9,7 +9,9 @@ namespace CortexCommerce.Dominio.Entidades
     {
         public int Id { get; private set; }
         public int PedidoId { get; private set; }
+        public Pedido Pedido { get; set; }
         public int ProdutoId { get; private set; }
+        public Produto Produto { get; set; }
         public int Quantidade { get; private set; }
         public decimal PrecoUnitario { get; private set; }
         protected ItemPedido()

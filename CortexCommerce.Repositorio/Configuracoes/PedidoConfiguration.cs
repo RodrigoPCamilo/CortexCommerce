@@ -18,7 +18,7 @@ namespace CortexCommerce.Repositorio.Configuracoes
             builder.Property(p => p.DataCriacao).HasColumnName("DataPedido").IsRequired();
 
             builder.HasMany(p => p.Items)
-                   .WithOne()
+                   .WithOne(i => i.Pedido)
                    .HasForeignKey(p => p.Id);
                    
         }

@@ -13,6 +13,7 @@ namespace CortexCommerce.Dominio.Entidades
         public string Categoria { get; private set; }
         public decimal Preco { get; private set; }
         public int Estoque { get; private set; }
+        public List<ItemPedido> ItemsPedido { get; private set; } = new List<ItemPedido>();
 
         protected Produto()
         {

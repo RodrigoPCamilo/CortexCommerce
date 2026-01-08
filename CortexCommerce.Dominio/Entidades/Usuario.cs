@@ -15,6 +15,7 @@ namespace CortexCommerce.Dominio.Entidades
         public string CategoriaFavorita { get; private set; }
         public decimal OrcamentoMedio { get; private set; }
         public DateTime DatCriacao { get; private set; }
+        public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
 
         protected Usuario()
         {

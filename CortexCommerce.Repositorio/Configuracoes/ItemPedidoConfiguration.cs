@@ -17,6 +17,13 @@ namespace CortexCommerce.Repositorio.Configuracoes
             builder.Property(i => i.ProdutoId).HasColumnName("ProdutoId").IsRequired();
             builder.Property(i => i.Quantidade).HasColumnName("Quantidade").IsRequired();
             builder.Property(i => i.PrecoUnitario).HasColumnType("decimal(18,2)").IsRequired();
+            builder.HasOne(i => i.Pedido)
+                   .WithMany(p => p.Items)
+                   .HasForeignKey(i => i.PedidoId);
+
+            builder.HasOne(i => i.Produto)
+                   .WithMany(p => p.ItemsPedido)
+                   .HasForeignKey(i => i.ProdutoId);
         }
     }
 }

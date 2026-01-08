@@ -12,7 +12,7 @@ namespace CortexCommerce.Repositorio
 {
     public class PedidoRepositorio : BaseRepositorio, IPedidoRepositorio
     {
-        protected PedidoRepositorio(CortexCommerceContexto contexto) : base(contexto)
+        public PedidoRepositorio(CortexCommerceContexto contexto) : base(contexto)
         {
         }
 

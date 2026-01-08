@@ -8,6 +8,7 @@ namespace CortexCommerce.Repositorio.Intefaces
 {
     public interface IUsuarioRepositorio
     {
+        
         void Criar(Usuario usuario);
         void Atualizar(Usuario usuario);
         Usuario ObterPorId(int id);

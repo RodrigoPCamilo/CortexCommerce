@@ -10,10 +10,11 @@ namespace CortexCommerce.Dominio.Entidades
     {
         public int Id { get; private set; }
         public int UsuarioId { get; private set; }
+        public Usuario Usuario{ get; set; }
         public StatusPedido Status { get; private set; }
         public DateTime DataCriacao { get; private set; }
 
-        public List<ItemPedido> Items { get; private set; }
+        public List<ItemPedido> Items { get; private set; } = new List<ItemPedido>();
         protected Pedido()
         {
 

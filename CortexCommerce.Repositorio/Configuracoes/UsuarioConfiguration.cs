@@ -20,6 +20,10 @@ namespace CortexCommerce.Repositorio.Configuracoes
             builder.Property(u => u.CategoriaFavorita).HasColumnName("CategoriaFavorita").HasMaxLength(200);
             builder.Property(u => u.OrcamentoMedio).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(u => u.DatCriacao).HasColumnName("DataCriacao)").IsRequired();
+
+            builder.HasMany(u => u.Pedidos)
+                   .WithOne(p => p.Usuario)
+                   .HasForeignKey(p => p.UsuarioId);
         }
     }
 }
