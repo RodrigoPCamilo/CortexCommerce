@@ -31,6 +31,19 @@ namespace CortexCommerce.Dominio.Entidades
             OrcamentoMedio = orcamentoMedio;
             DatCriacao = DateTime.UtcNow;
         }
+        public void AtualizarPerfil(string nome, string categoriaFavorita, decimal orcamentoMedio)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+                throw new ArgumentException("Nome inválido.");
+
+            if (orcamentoMedio <= 0)
+                throw new ArgumentException("Orçamento inválido.");
+
+            Nome = nome;
+            CategoriaFavorita = categoriaFavorita;
+            OrcamentoMedio = orcamentoMedio;
+        }
+
         private void Validar(string nome, string email, string senha, decimal orcamentoMedio)
         {
             if (string.IsNullOrWhiteSpace(nome))

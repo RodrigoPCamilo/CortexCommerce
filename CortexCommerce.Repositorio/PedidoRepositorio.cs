@@ -32,7 +32,7 @@ namespace CortexCommerce.Repositorio
             return _contexto.pedidos.Include(p => p.Items).Where(p => p.UsuarioId == usuarioId).ToList();
         }
 
-        public Pedido ObterPedidoAbertoPorUsuario(int usuarioId)
+        public Pedido ObterPedidoAberto(int usuarioId)
         {
             return _contexto.pedidos.Include(p => p.Items).FirstOrDefault(p => p.UsuarioId == usuarioId && p.Status != StatusPedido.Finalizado && p.Status != StatusPedido.Cancelado);
         }

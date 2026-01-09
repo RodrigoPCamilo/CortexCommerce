@@ -10,7 +10,7 @@ namespace CortexCommerce.Repositorio.Intefaces
     {
         void Criar(Pedido pedido);
         Pedido ObterPorId(int id);
-        Pedido ObterPedidoAbertoPorUsuario(int usuarioId);
+        Pedido ObterPedidoAberto(int usuarioId);
         IEnumerable<Pedido> ListarPorUsuario(int usuarioId);
         void Atualizar(Pedido pedido);
     }

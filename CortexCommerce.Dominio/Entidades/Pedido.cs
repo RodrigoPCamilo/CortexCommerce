@@ -24,7 +24,6 @@ namespace CortexCommerce.Dominio.Entidades
             UsuarioId = usuarioId;
             Status = StatusPedido.criado;
             DataCriacao = DateTime.UtcNow;
-            Items = new List<ItemPedido>();
         }
         public void AdicionarItem(ItemPedido item)
         {
@@ -32,10 +31,7 @@ namespace CortexCommerce.Dominio.Entidades
         }
         public decimal CalcularTotal()
         {
-            decimal total = 0;
-            foreach (var item in Items)
-                total += item.CalcularTotal();
-            return total;
+            return Items.Sum(i => i.CalcularTotal());
         }
         public void Finalizar()
         {
