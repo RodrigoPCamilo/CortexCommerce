@@ -44,6 +44,7 @@ namespace CortexCommerce.Aplicacao.Services
                 dto.CategoriaFavorita,
                 dto.OrcamentoMedio
             );
+            _repositorio.Criar(usuario);
         }
 
         public IEnumerable<UsuarioDto> Listar()
@@ -62,6 +63,10 @@ namespace CortexCommerce.Aplicacao.Services
         public UsuarioDto ObterPorId(int id)
         {
             var usuario = _repositorio.ObterPorId(id);
+
+            if (usuario == null)
+                throw new Exception("Usuário não encontrado.");
+
             return new UsuarioDto
             {
                 Id = usuario.Id,

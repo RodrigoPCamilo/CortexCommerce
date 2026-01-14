@@ -12,5 +12,6 @@ namespace CortexCommerce.Aplicacao.Interfaces
         void Atualizar(AtualizarUsuarioDto dto);
         UsuarioDto ObterPorId(int id);
         IEnumerable<UsuarioDto> Listar();
+        
     }
 }
