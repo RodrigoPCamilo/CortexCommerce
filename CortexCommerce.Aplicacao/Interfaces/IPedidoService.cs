@@ -8,9 +8,9 @@ namespace CortexCommerce.Aplicacao.Interfaces
 {
     public interface IPedidoService
     {
-        int CriarPedido(CriarPedidoDto dto);
-        void AdicionarItem(int pedidoId, int ProdutoId, int quantidade);
-        void FinalizarPedido(int usuarioId);
-        PedidoDto ObterPedidoAberto(int usuarioId);
+        Task<int> CriarPedido(CriarPedidoDto dto);
+        Task AdicionarItem(int pedidoId, int ProdutoId, int quantidade);
+        Task FinalizarPedido(int usuarioId);
+        Task<PedidoDto> ObterPedidoAberto(int usuarioId);
     }
 }

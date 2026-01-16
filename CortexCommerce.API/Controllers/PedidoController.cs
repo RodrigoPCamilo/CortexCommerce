@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using CortexCommerce.API.Models.Pedidos.Requisicao;
 using CortexCommerce.API.Models.Pedidos.Resposta;
 using CortexCommerce.Aplicacao.DTOs;
@@ -22,35 +19,44 @@ namespace CortexCommerce.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(CriarPedidoDto request)
+        public async Task<IActionResult> Criar([FromBody] CriarPedidoRequest request)
         {
-            // _pedidoService.CriarPedido(request.UsuarioId);
-            return Ok();
+            var pedidoId = await _pedidoService.CriarPedido(
+                new CriarPedidoDto
+                {
+                    UsuarioId = request.UsuarioId
+                }
+            );
+
+            return Ok(new { PedidoId = pedidoId });
         }
+
         [HttpPost("adicionar-item")]
-        public IActionResult AdicionarItem(AdicionarItemRequest request)
+        public async Task<IActionResult> AdicionarItem([FromBody] AdicionarItemRequest request)
         {
-            _pedidoService.AdicionarItem(
+            await _pedidoService.AdicionarItem(
                 request.UsuarioId,
                 request.ProdutoId,
                 request.Quantidade
             );
+
             return Ok();
         }
-        [HttpGet("UsuarioId")]
-        public IActionResult ObterPedidoAberto(int usuarioId)
+
+        [HttpGet("{usuarioId}")]
+        public async Task<IActionResult> ObterPedidoAberto(int usuarioId)
         {
-            var pedido = _pedidoService.ObterPedidoAberto(usuarioId);
+            var pedido = await _pedidoService.ObterPedidoAberto(usuarioId);
+
             if (pedido == null)
                 return NotFound();
 
             return Ok(new PedidoResponse
             {
-                // PedidoId = pedido.Id,
-                // UsuarioId = pedido.UsuarioId,
-                // Status = pedido.Status.ToString(),
-                // Total = pedido.CalcularTotal()
-                
+                PedidoId = pedido.Id,
+                UsuarioId = pedido.UsuarioId,
+                Status = pedido.Status,
+                Total = pedido.Total
             });
         }
     }

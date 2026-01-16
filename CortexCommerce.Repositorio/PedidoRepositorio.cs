@@ -16,30 +16,30 @@ namespace CortexCommerce.Repositorio
         {
         }
 
-        public void Criar(Pedido pedido)
+        public async Task Criar(Pedido pedido)
         {
-            _contexto.pedidos.Add(pedido);
-            SalvarAlteracoes();
+            _contexto.Pedidos.Add(pedido);
+           await _contexto.SaveChangesAsync();
         }
-        public void Atualizar(Pedido pedido)
+        public async Task Atualizar(Pedido pedido)
         {
-            _contexto.pedidos.Update(pedido);
-            SalvarAlteracoes();
-        }
-
-        public IEnumerable<Pedido> ListarPorUsuario(int usuarioId)
-        {
-            return _contexto.pedidos.Include(p => p.Items).Where(p => p.UsuarioId == usuarioId).ToList();
+            _contexto.Pedidos.Update(pedido);
+            await _contexto.SaveChangesAsync();
         }
 
-        public Pedido ObterPedidoAberto(int usuarioId)
+        public async Task<IEnumerable<Pedido>> ListarPorUsuario(int usuarioId)
         {
-            return _contexto.pedidos.Include(p => p.Items).FirstOrDefault(p => p.UsuarioId == usuarioId && p.Status != StatusPedido.Finalizado && p.Status != StatusPedido.Cancelado);
+            return await _contexto.Pedidos.Include(p => p.Items).Where(p => p.UsuarioId == usuarioId).ToListAsync();
         }
 
-        public Pedido ObterPorId(int id)
+        public async Task<Pedido> ObterPedidoAberto(int usuarioId)
         {
-            return _contexto.pedidos.Include(p => p.Items).FirstOrDefault(p => p.Id == id);
+            return await _contexto.Pedidos.Include(p => p.Items).FirstOrDefaultAsync(p => p.UsuarioId == usuarioId && p.Status != StatusPedido.Finalizado && p.Status != StatusPedido.Cancelado);
+        }
+
+        public async Task<Pedido> ObterPorId(int id)
+        {
+            return await _contexto.Pedidos.Include(p => p.Items).FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

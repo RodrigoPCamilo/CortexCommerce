@@ -20,9 +20,9 @@ namespace CortexCommerce.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult ListarDisponiveis()
+        public async Task<IActionResult> ListarDisponiveis()
         {
-            var produtos = _produtoService.ListarDisponiveis();
+            var produtos =  await _produtoService.ListarDisponiveis();
 
             var response = produtos.Select(p => new ProdutoResponse
             {

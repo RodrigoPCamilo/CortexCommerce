@@ -9,10 +9,10 @@ namespace CortexCommerce.Repositorio.Intefaces
     public interface IUsuarioRepositorio
     {
         
-        void Criar(Usuario usuario);
-        void Atualizar(Usuario usuario);
-        Usuario ObterPorId(int id);
-        Usuario ObterPorEmail(string email);
-        IEnumerable<Usuario> Listar();
+        Task Criar(Usuario usuario);
+        Task Atualizar(Usuario usuario);
+        Task<Usuario> ObterPorId(int id);
+         Task<Usuario> ObterPorEmail(string email);
+        Task<IEnumerable<Usuario>> Listar();
     }
 }

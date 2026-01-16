@@ -14,9 +14,6 @@ namespace CortexCommerce.Repositorio
         {
             _contexto = contexto;
         }
-        protected void SalvarAlteracoes()
-        {
-            _contexto.SaveChanges();
-        }
+
     }
 }

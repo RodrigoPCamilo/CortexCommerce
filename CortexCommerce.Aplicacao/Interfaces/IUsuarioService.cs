@@ -8,10 +8,10 @@ namespace CortexCommerce.Aplicacao.Interfaces
 {
     public interface IUsuarioService
     {
-        void Criar(CriarUsuarioDto dto);
-        void Atualizar(AtualizarUsuarioDto dto);
-        UsuarioDto ObterPorId(int id);
-        IEnumerable<UsuarioDto> Listar();
+        Task Criar(CriarUsuarioDto dto);
+        Task Atualizar(AtualizarUsuarioDto dto);
+        Task<UsuarioDto >ObterPorId(int id);
+        Task<IEnumerable<UsuarioDto>> Listar();
         
     }
 }

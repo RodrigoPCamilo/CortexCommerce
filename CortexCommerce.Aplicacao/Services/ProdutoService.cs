@@ -16,7 +16,7 @@ namespace CortexCommerce.Aplicacao.Services
         {
             _repositorio = repositorio;
         }
-        public void Criar(CriarProdutoDto dto)
+        public async Task Criar(CriarProdutoDto dto)
         {
             var produto = new Produto(
                 dto.Nome,
@@ -25,21 +25,24 @@ namespace CortexCommerce.Aplicacao.Services
                 dto.Preco,
                 dto.Estoque
             );
-            _repositorio.Criar(produto);
+          await  _repositorio.Criar(produto);
         }
 
-        public IEnumerable<ProdutoDto> ListarDisponiveis()
+       public async Task<IEnumerable<ProdutoDto>> ListarDisponiveis()
+{
+    var produtos = await _repositorio.Listar();
+
+    return produtos
+        .Where(p => p.Estoque > 0)
+        .Select(p => new ProdutoDto
         {
-            return _repositorio.Listar()
-                .Where(p => p.Estoque > 0)
-                .Select(p => new ProdutoDto
-                {
-                    Id = p.Id,
-                    Nome = p.Nome,
-                    Categoria = p.Categoria,
-                    Preco = p.Preco,
-                    Estoque = p.Estoque
-                });
-        }
+            Id = p.Id,
+            Nome = p.Nome,
+            Categoria = p.Categoria,
+            Preco = p.Preco,
+            Estoque = p.Estoque
+        });
+}
+
     }
 }

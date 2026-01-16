@@ -8,7 +8,7 @@ namespace CortexCommerce.Aplicacao.Interfaces
 {
     public interface IProdutoService
     {
-        void Criar(CriarProdutoDto dto);
-        IEnumerable<ProdutoDto> ListarDisponiveis();
+        Task Criar(CriarProdutoDto dto);
+        Task<IEnumerable<ProdutoDto>> ListarDisponiveis();
     }
 }

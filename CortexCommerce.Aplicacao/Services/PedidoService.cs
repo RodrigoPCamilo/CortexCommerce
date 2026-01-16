@@ -19,15 +19,15 @@ namespace CortexCommerce.Aplicacao.Services
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public void AdicionarItem(int pedidoId, int ProdutoId, int quantidade)
+        public async Task AdicionarItem(int pedidoId, int ProdutoId, int quantidade)
         {
-            var pedido = _pedidoRepositorio.ObterPedidoAberto(usuarioId: pedidoId);
+            var pedido = await _pedidoRepositorio.ObterPedidoAberto(usuarioId: pedidoId);
 
             if (pedido == null)
 
                 throw new Exception("Pedido aberto não encontrado para o usuário.");
 
-            var produto = _produtoRepositorio.ObterPorId(ProdutoId);
+            var produto = await _produtoRepositorio.ObterPorId(ProdutoId);
 
             if (produto == null)
                 throw new Exception("Produto não encontrado.");
@@ -42,28 +42,28 @@ namespace CortexCommerce.Aplicacao.Services
             pedido.AdicionarItem(item);
         }
 
-        public int CriarPedido(CriarPedidoDto dto)
+        public async Task<int> CriarPedido(CriarPedidoDto dto)
         {
-            var pedido = _pedidoRepositorio.ObterPedidoAberto(dto.UsuarioId);
+            var pedido = await _pedidoRepositorio.ObterPedidoAberto(dto.UsuarioId);
             if (pedido == null)
             {
                 pedido = new Pedido(dto.UsuarioId);
-                _pedidoRepositorio.Criar(pedido);
+               await _pedidoRepositorio.Criar(pedido);
             }
             return pedido.Id;
         }
 
-        public void FinalizarPedido(int usuarioId)
+        public async Task FinalizarPedido(int usuarioId)
         {
-            var pedido = _pedidoRepositorio.ObterPedidoAberto(usuarioId);
+            var pedido = await _pedidoRepositorio.ObterPedidoAberto(usuarioId);
             if (pedido == null)
                 throw new Exception("Pedido aberto não encontrado para o usuário.");
-            pedido.Finalizar();
+              pedido.Finalizar();
         }
 
-        public PedidoDto ObterPedidoAberto(int usuarioId)
+        public async Task<PedidoDto> ObterPedidoAberto(int usuarioId)
         {
-            var pedido = _pedidoRepositorio.ObterPedidoAberto(usuarioId);
+            var pedido = await _pedidoRepositorio.ObterPedidoAberto(usuarioId);
             if (pedido == null)
                 return null;
             return MapearParaDto(pedido);
@@ -73,7 +73,8 @@ namespace CortexCommerce.Aplicacao.Services
             return new PedidoDto
             {
                 Id = pedido.Id,
-                Status = pedido.Status,
+                UsuarioId = pedido.UsuarioId,
+                Status = pedido.Status.ToString(),
                 Total = pedido.CalcularTotal(),
                 Itens = pedido.Items.Select(i => new ItemPedidoDto
                 {

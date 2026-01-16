@@ -8,10 +8,10 @@ namespace CortexCommerce.Repositorio.Intefaces
 {
     public interface IPedidoRepositorio
     {
-        void Criar(Pedido pedido);
-        Pedido ObterPorId(int id);
-        Pedido ObterPedidoAberto(int usuarioId);
-        IEnumerable<Pedido> ListarPorUsuario(int usuarioId);
-        void Atualizar(Pedido pedido);
+        Task Criar(Pedido pedido);
+        Task<Pedido> ObterPorId(int id);
+        Task <Pedido> ObterPedidoAberto(int usuarioId);
+        Task< IEnumerable<Pedido>> ListarPorUsuario(int usuarioId);
+        Task Atualizar(Pedido pedido);
     }
 }

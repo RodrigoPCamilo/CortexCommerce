@@ -8,9 +8,10 @@ namespace CortexCommerce.Repositorio.Intefaces
 {
     public interface IProdutoRepositorio
     {
-        void Criar(Produto produto);
-        void Atualizar(Produto produto);
-        Produto ObterPorId(int id);
-        IEnumerable<Produto> Listar(); 
+        Task Criar(Produto produto);
+        Task Atualizar(Produto produto);
+        Task<Produto> ObterPorId(int id);
+        Task<IEnumerable<Produto>> Listar(); 
+        
     }
 }

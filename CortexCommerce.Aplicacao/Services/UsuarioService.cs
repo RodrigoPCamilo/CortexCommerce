@@ -19,9 +19,9 @@ namespace CortexCommerce.Aplicacao.Services
             _repositorio = repositorio;
         }
 
-        public void Atualizar(AtualizarUsuarioDto dto)
+        public async Task Atualizar(AtualizarUsuarioDto dto)
         {
-            var usuario = _repositorio.ObterPorId(dto.Id);
+            var usuario = await _repositorio.ObterPorId(dto.Id);
 
             if (usuario == null)
                 throw new Exception("Usuário não encontrado.");
@@ -32,10 +32,10 @@ namespace CortexCommerce.Aplicacao.Services
                 dto.OrcamentoMedio
             );
 
-            _repositorio.Atualizar(usuario);
+          await  _repositorio.Atualizar(usuario);
         }
 
-        public void Criar(CriarUsuarioDto dto)
+        public async Task Criar(CriarUsuarioDto dto)
         {
             var usuario = new Usuario(
                 dto.Nome,
@@ -44,12 +44,13 @@ namespace CortexCommerce.Aplicacao.Services
                 dto.CategoriaFavorita,
                 dto.OrcamentoMedio
             );
-            _repositorio.Criar(usuario);
+          await  _repositorio.Criar(usuario);
         }
 
-        public IEnumerable<UsuarioDto> Listar()
+        public async Task<IEnumerable<UsuarioDto>> Listar()
         {
-            return _repositorio.Listar()
+            var Usuario = await _repositorio.Listar();
+            return Usuario
             .Select(u => new UsuarioDto
             {
                 Id = u.Id,
@@ -60,9 +61,9 @@ namespace CortexCommerce.Aplicacao.Services
             });
         }
 
-        public UsuarioDto ObterPorId(int id)
+        public async Task<UsuarioDto> ObterPorId(int id)
         {
-            var usuario = _repositorio.ObterPorId(id);
+            var usuario = await _repositorio.ObterPorId(id);
 
             if (usuario == null)
                 throw new Exception("Usuário não encontrado.");

@@ -21,7 +21,7 @@ namespace CortexCommerce.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Criar(CriarUsuarioRequest request)
+        public async Task<IActionResult> Criar(CriarUsuarioRequest request)
         {
             var dto = new CriarUsuarioDto
             {
@@ -32,12 +32,12 @@ namespace CortexCommerce.API.Controllers
                 OrcamentoMedio = request.OrcamentoMedio
             };
 
-            _usuarioService.Criar(dto);
+           await _usuarioService.Criar(dto);
 
             return Ok();
         }
         [HttpPut("{id}")]
-        public IActionResult Atualizar(int id, AtualizarUsuarioRequest request)
+        public async Task<IActionResult> Atualizar(int id, AtualizarUsuarioRequest request)
         {
             var dto = new AtualizarUsuarioDto
             {
@@ -47,14 +47,14 @@ namespace CortexCommerce.API.Controllers
                 OrcamentoMedio = request.OrcamentoMedio
             };
 
-            _usuarioService.Atualizar(dto);
+          await  _usuarioService.Atualizar(dto);
 
             return NoContent();
         }
         [HttpGet("{id}")]
-        public IActionResult ObterPorId(int id)
+        public async Task<IActionResult> ObterPorId(int id)
         {
-            var usuario = _usuarioService.ObterPorId(id);
+            var usuario = await _usuarioService.ObterPorId(id);
             if (usuario == null)
                 return NotFound();
 

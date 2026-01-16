@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CortexCommerce.Repositorio.Migrations
 {
     [DbContext(typeof(CortexCommerceContexto))]
-    [Migration("20260107191945_Initial")]
-    partial class Initial
+    [Migration("20260116150402_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,7 +28,10 @@ namespace CortexCommerce.Repositorio.Migrations
             modelBuilder.Entity("CortexCommerce.Dominio.Entidades.ItemPedido", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("PedidoId")
                         .HasColumnType("int")
@@ -46,6 +49,10 @@ namespace CortexCommerce.Repositorio.Migrations
                         .HasColumnName("Quantidade");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
+
+                    b.HasIndex("ProdutoId");
 
                     b.ToTable("ItemPedido", (string)null);
                 });
@@ -71,6 +78,8 @@ namespace CortexCommerce.Repositorio.Migrations
                         .HasColumnName("UsuarioId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Pedidos", (string)null);
                 });
@@ -160,16 +169,47 @@ namespace CortexCommerce.Repositorio.Migrations
 
             modelBuilder.Entity("CortexCommerce.Dominio.Entidades.ItemPedido", b =>
                 {
-                    b.HasOne("CortexCommerce.Dominio.Entidades.Pedido", null)
+                    b.HasOne("CortexCommerce.Dominio.Entidades.Pedido", "Pedido")
                         .WithMany("Items")
-                        .HasForeignKey("Id")
+                        .HasForeignKey("PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("CortexCommerce.Dominio.Entidades.Produto", "Produto")
+                        .WithMany("ItemsPedido")
+                        .HasForeignKey("ProdutoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pedido");
+
+                    b.Navigation("Produto");
+                });
+
+            modelBuilder.Entity("CortexCommerce.Dominio.Entidades.Pedido", b =>
+                {
+                    b.HasOne("CortexCommerce.Dominio.Entidades.Usuario", "Usuario")
+                        .WithMany("Pedidos")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("CortexCommerce.Dominio.Entidades.Pedido", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("CortexCommerce.Dominio.Entidades.Produto", b =>
+                {
+                    b.Navigation("ItemsPedido");
+                });
+
+            modelBuilder.Entity("CortexCommerce.Dominio.Entidades.Usuario", b =>
+                {
+                    b.Navigation("Pedidos");
                 });
 #pragma warning restore 612, 618
         }
