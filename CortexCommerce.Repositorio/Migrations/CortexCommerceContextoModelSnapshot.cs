@@ -131,9 +131,9 @@ namespace CortexCommerce.Repositorio.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasColumnName("CategoriaFavorita");
 
-                    b.Property<DateTime>("DatCriacao")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2")
-                        .HasColumnName("DataCriacao)");
+                        .HasColumnName("DataCriacao");
 
                     b.Property<string>("Email")
                         .IsRequired()

@@ -29,4 +29,4 @@ namespace CortexCommerce.Repositorio.Contexto
             
         }
     }
-}
+}                                                                                       

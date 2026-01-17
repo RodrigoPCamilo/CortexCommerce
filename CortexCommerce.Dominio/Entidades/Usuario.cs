@@ -14,7 +14,7 @@ namespace CortexCommerce.Dominio.Entidades
 
         public string CategoriaFavorita { get; private set; }
         public decimal OrcamentoMedio { get; private set; }
-        public DateTime DatCriacao { get; private set; }
+        public DateTime DataCriacao { get; private set; }
         public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
 
         protected Usuario()
@@ -29,7 +29,7 @@ namespace CortexCommerce.Dominio.Entidades
             Senha = senha;
             CategoriaFavorita = categoriaFavorita;
             OrcamentoMedio = orcamentoMedio;
-            DatCriacao = DateTime.UtcNow;
+            DataCriacao = DateTime.UtcNow;
         }
         public void AtualizarPerfil(string nome, string categoriaFavorita, decimal orcamentoMedio)
         {

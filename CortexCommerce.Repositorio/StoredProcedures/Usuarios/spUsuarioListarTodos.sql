@@ -1,0 +1,5 @@
+CREATE PROCEDURE spUsuarioListarTodos
+AS
+BEGIN
+    SELECT * FROM Usuarios
+END

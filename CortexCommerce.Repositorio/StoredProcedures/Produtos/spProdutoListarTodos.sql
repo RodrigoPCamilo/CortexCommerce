@@ -1,0 +1,5 @@
+CREATE PROCEDURE spProdutoListarTodos
+AS
+BEGIN
+    SELECT * FROM Produtos
+END
