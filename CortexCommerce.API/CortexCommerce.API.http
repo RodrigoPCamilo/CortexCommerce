@@ -1,0 +1,6 @@
+@CortexCommerce.API_HostAddress = http://localhost:5139
+
+GET {{CortexCommerce.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
