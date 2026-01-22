@@ -3,7 +3,7 @@ CREATE PROCEDURE spUsuarioAtualizar
     @Nome NVARCHAR(150),
     @CategoriaFavorita NVARCHAR(200),
     @OrcamentoMedio DECIMAL(18,2),
-    @LojaPreferida NVARCHAR(100)
+    @LojaPreferida INT
 AS
 BEGIN
 SET NOCOUNT ON;
