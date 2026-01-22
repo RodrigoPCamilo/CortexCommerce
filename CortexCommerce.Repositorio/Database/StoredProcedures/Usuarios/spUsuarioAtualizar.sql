@@ -10,7 +10,7 @@ SET NOCOUNT ON;
     UPDATE Usuarios
     SET Nome = @Nome,
         CategoriaFavorita = @CategoriaFavorita,
-        OrcamentoMedio = @OrcamentoMedio
+        OrcamentoMedio = @OrcamentoMedio,
         LojaPreferida = @LojaPreferida
     WHERE Id = @Id
 END

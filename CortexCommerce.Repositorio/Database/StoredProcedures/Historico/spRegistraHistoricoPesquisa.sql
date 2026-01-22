@@ -8,5 +8,5 @@ BEGIN
     SET NOCOUNT ON;
 
     INSERT INTO HistoricoPesquisas (UsuarioId, Pergunta, RespostaGerada, Data)
-    VALUES (@UsuarioId, @Pergunta, @RespostaGerada, GETUTCDATE());
+    VALUES (@UsuarioId, @Pergunta, @RespostaGerada, GETDATE());
 END

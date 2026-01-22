@@ -11,7 +11,7 @@ BEGIN
         SenhaHash,
         CategoriaFavorita,
         OrcamentoMedio,
-        PlataformasPreferidas,
+        LojaPreferida,
         DataCriacao
     FROM Usuarios
     WHERE Id = @Id;

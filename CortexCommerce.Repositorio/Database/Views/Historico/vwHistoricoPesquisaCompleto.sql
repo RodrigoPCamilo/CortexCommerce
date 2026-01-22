@@ -11,4 +11,4 @@ SELECT
 FROM 
     HistoricoPesquisas h
 INNER JOIN 
-    Usuarios u ON u.Id = u.UsuarioId;
+    Usuarios u ON u.Id = u.Id;
