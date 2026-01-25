@@ -12,6 +12,6 @@ namespace CortexCommerce.API.Models.Usuarios.Requisicao
         public string Senha { get; set; }
         public string CategoriaFavorita { get; set; }
         public decimal OrcamentoMedio { get; set; }
-        public string PlataformasPreferidas { get; set; }
+        public string LojaPreferida { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using CortexCommerce.Aplicacao.Interfaces;
 using CortexCommerce.Repositorio.Contexto;
 using CortexCommerce.Repositorio.Interfaces;
 using CortexCommerce.Service.Interface;
-using CortexCommerce.Services.Services;
+using CortexCommerce.Service.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -16,69 +16,62 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-#region Banco de Dados
+#region Banco de Dados (Dapper)
 
-builder.Services.AddScoped<IDbConnection>(sp =>
+builder.Services.AddScoped<IDbConnection>(_ =>
     new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
 #endregion
 
-#region Repositorios
+#region Repositórios
 
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IHistoricoPesquisaRepositorio, HistoricoPesquisaRepositorio>();
 
 #endregion
 
-#region Aplicacao
+#region Aplicação
 
 builder.Services.AddScoped<IUsuarioAplicacao, UsuarioAplicacao>();
 builder.Services.AddScoped<IAuthAplicacao, AuthAplicacao>();
 builder.Services.AddScoped<IHistoricoPesquisaAplicacao, HistoricoPesquisaAplicacao>();
-builder.Services.AddHttpClient<IIAService, IAService>();
-
 
 #endregion
 
-#region Services
+#region IA - GitHub Models
+
+builder.Services.AddHttpClient<IIAService, AiService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(30);
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("CortexCommerce");
+});
 
 #endregion
 
 #region JWT
 
-var jwtConfig = builder.Configuration.GetSection("Jwt");
+var jwt = builder.Configuration.GetSection("Jwt");
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+    .AddJwtBearer(opt =>
     {
-        options.TokenValidationParameters = new TokenValidationParameters
+        opt.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
 
-            ValidIssuer = jwtConfig["Issuer"],
-            ValidAudience = jwtConfig["Audience"],
+            ValidIssuer = jwt["Issuer"],
+            ValidAudience = jwt["Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtConfig["Key"])
+                Encoding.UTF8.GetBytes(jwt["Key"]!)
             ),
-
             ClockSkew = TimeSpan.Zero
         };
     });
-#region IA (OpenAI)
-
-builder.Services.AddHttpClient<IIAService, IAService>(client =>
-{
-    client.BaseAddress = new Uri("https://api.openai.com/v1/");
-    client.DefaultRequestHeaders.Add("Authorization",
-        $"Bearer {builder.Configuration["OpenAI:ApiKey"]}");
-});
-
-#endregion
 
 builder.Services.AddAuthorization();
 
@@ -93,14 +86,13 @@ builder.Services.AddControllers();
 #region Swagger + JWT
 
 builder.Services.AddEndpointsApiExplorer();
-
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "CortexCommerce API",
         Version = "v1",
-        Description = "API do projeto CortexCommerce com autenticação JWT"
+        Description = "API do CortexCommerce com IA e autenticação JWT"
     });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -131,12 +123,28 @@ builder.Services.AddSwaggerGen(c =>
 
 #endregion
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials()
+            .WithOrigins(
+                "http://localhost:5173"
+            );
+    });
+});
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("FrontendPolicy");
 }
 
 app.UseHttpsRedirection();
@@ -145,4 +153,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.Run();

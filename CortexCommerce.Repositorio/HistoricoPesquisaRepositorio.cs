@@ -21,22 +21,23 @@ namespace CortexCommerce.Repositorio.Interfaces
 
         public async Task<int> AdicionarInteracaoAsync(HistoricoPesquisa historico)
         {
-            return await _connection.QuerySingleAsync<int>(
-                "spRegitrarHistoricoPesquisa",
+           return await _connection.QuerySingleAsync<int>(
+                "spRegistraHistoricoPesquisa",
                 new
                 {
-                    historico.UsuarioId,
-                    historico.Pergunta,
-                    Resposta = historico.RespostaGerada
+                    UsuarioId = historico.UsuarioId,
+                    Pergunta = historico.Pergunta,
+                    RespostaGerada = historico.RespostaGerada
                 },
                 commandType: CommandType.StoredProcedure
             );
+
         }
 
         public async Task<IEnumerable<HistoricoPesquisa>> HistoricoDeUsuarioAsync(int usuarioId)
         {
             return await _connection.QueryAsync<HistoricoPesquisa>(
-                "spListarHistoricoPesquisaPorUsuario",
+                "spListarHistoricoPorUsuario",
                 new
                 {
                     UsuarioId = usuarioId

@@ -16,21 +16,21 @@ namespace CortexCommerce.API.Controllers
     [Route("api/auth")]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthAplicacao _authService;
-        public AuthController(IAuthAplicacao authService)
+        private readonly IAuthAplicacao _authAplicacao;
+        public AuthController(IAuthAplicacao authAplicacao)
         {
-            _authService = authService;
+            _authAplicacao = authAplicacao;
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            var token = await _authService.LoginAsync(new LoginDto
+            var response = await _authAplicacao.LoginAsync(new LoginDto
             {
                 Email = request.Email,
                 Senha = request.Senha
             });
 
-            return Ok(new { Token = token });
+            return Ok( response );
         }
     }
 }

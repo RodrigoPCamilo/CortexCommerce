@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,67 +11,67 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace CortexCommerce.Aplicacao.Aplicacao
-
 {
-public class AuthAplicacao : IAuthAplicacao
-{
-    private readonly IUsuarioRepositorio _usuarioRepositorio;
-    private readonly IConfiguration _configuration;
-
-    public AuthAplicacao(
-        IUsuarioRepositorio usuarioRepositorio,
-        IConfiguration configuration)
+    public class AuthAplicacao : IAuthAplicacao
     {
-        _usuarioRepositorio = usuarioRepositorio;
-        _configuration = configuration;
-    }
+        private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly IConfiguration _configuration;
 
-    public async Task<AuthResponseDTO> LoginAsync(LoginDto dto)
-    {
-        var usuario = await _usuarioRepositorio.ObterPorEmailAsync(dto.Email);
-
-        if (usuario == null || !usuario.ValidarSenha(dto.Senha))
-            throw new UnauthorizedAccessException("Email ou senha inválidos.");
-
-        var expiraEm = DateTime.UtcNow.AddHours(2);
-
-        var token = GerarToken(usuario, expiraEm);
-
-        return new AuthResponseDTO
+        public AuthAplicacao(
+            IUsuarioRepositorio usuarioRepositorio,
+            IConfiguration configuration)
         {
-            Token = token,
-            ExpiraEm = expiraEm,
-            Email = usuario.Email
-        };
-    }
+            _usuarioRepositorio = usuarioRepositorio;
+            _configuration = configuration;
+        }
 
-    private string GerarToken(Usuario usuario, DateTime expiraEm)
-    {
-        var claims = new[]
+        public async Task<AuthResponseDTO> LoginAsync(LoginDto dto)
         {
-            new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-            new Claim(ClaimTypes.Email, usuario.Email)
-        };
+            var usuario = await _usuarioRepositorio.ObterPorEmailAsync(dto.Email);
 
-        var chave = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
-        );
+            if (usuario == null || !usuario.ValidarSenha(dto.Senha))
+                throw new UnauthorizedAccessException("Email ou senha inválidos.");
 
-        var credenciais = new SigningCredentials(
-            chave,
-            SecurityAlgorithms.HmacSha256
-        );
+            var expiraEm = DateTime.UtcNow.AddHours(
+                int.Parse(_configuration["Jwt:ExpireHours"]!)
+            );
 
-        var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
-            claims: claims,
-            expires: expiraEm,
-            signingCredentials: credenciais
-        );
+            var token = GerarToken(usuario, expiraEm);
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+            return new AuthResponseDTO
+            {
+                Token = token,
+                ExpiraEm = expiraEm,
+                Email = usuario.Email
+            };
+        }
+
+        private string GerarToken(Usuario usuario, DateTime expiraEm)
+        {
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
+                new Claim(ClaimTypes.Email, usuario.Email)
+            };
+
+            var chave = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!)
+            );
+
+            var credenciais = new SigningCredentials(
+                chave,
+                SecurityAlgorithms.HmacSha256
+            );
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: expiraEm,
+                signingCredentials: credenciais
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
-}
-
 }

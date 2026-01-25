@@ -22,7 +22,7 @@ namespace CortexCommerce.Repositorio.Migrations
                     SenhaHash = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     CategoriaFavorita = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     OrcamentoMedio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    LojaPreferida = table.Column<int>(type: "int", maxLength: 200, nullable: false),
+                    LojaPreferida = table.Column<int>(type: "int", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>

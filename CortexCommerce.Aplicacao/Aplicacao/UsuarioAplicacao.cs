@@ -63,18 +63,19 @@ namespace CortexCommerce.Aplicacao.Aplicacao
                 Nome = usuario.Nome,
                 Email = usuario.Email,
                 CategoriaFavorita = usuario.CategoriaFavorita,
-                OrcamentoMedio = usuario.OrcamentoMedio
+                OrcamentoMedio = usuario.OrcamentoMedio,
+                LojaPreferida = usuario.LojaPreferida
             };
         }
         public async Task<UsuarioDto> ObterPorIdAsync(int id)
-{
-    var usuario = await _usuarioRepositorio.ObterPorIdAsync(id);
+        {
+            var usuario = await _usuarioRepositorio.ObterPorIdAsync(id);
 
-    if (usuario == null)
-        throw new Exception("Usuário não encontrado");
+            if (usuario == null)
+                throw new Exception("Usuário não encontrado");
 
-    return Mapear(usuario);
-}
+            return Mapear(usuario);
+        }
 
     }
 }

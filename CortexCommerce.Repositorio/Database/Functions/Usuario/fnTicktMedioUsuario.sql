@@ -1,3 +1,4 @@
+
 CREATE FUNCTION fnTicktMedioUsuario()
 RETURNS DECIMAL(10,2)
 AS

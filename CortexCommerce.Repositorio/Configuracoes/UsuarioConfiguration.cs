@@ -17,7 +17,7 @@ namespace CortexCommerce.Repositorio.Configuracoes
             builder.Property(u => u.Email).HasColumnName("Email").HasMaxLength(150).IsRequired();
             builder.Property(u => u.SenhaHash).HasColumnName("SenhaHash").HasMaxLength(150).IsRequired();
             builder.Property(u => u.CategoriaFavorita).HasColumnName("CategoriaFavorita").HasMaxLength(200);
-            builder.Property(u => u.LojaPreferida).HasColumnName("LojaPreferida").HasMaxLength(200);
+            builder.Property(u => u.LojaPreferida).HasColumnName("LojaPreferida").HasConversion<int>().IsRequired();
             builder.Property(u => u.OrcamentoMedio).HasColumnType("decimal(18,2)").IsRequired();
             builder.Property(u => u.DataCriacao).HasColumnName("DataCriacao").IsRequired();
 

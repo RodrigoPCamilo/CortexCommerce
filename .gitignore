@@ -9,6 +9,7 @@
 
 # Ignorar arquivos de configuração de desenvolvimento
 CortexCommerce.API/appsettings.Development.json
+CortexCommerce.API/appsettings.json
 
 # Build results
 [Dd]ebug/

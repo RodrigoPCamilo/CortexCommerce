@@ -19,20 +19,21 @@ namespace CortexCommerce.Repositorio.Interfaces
 
         public async Task CriarAsync(Usuario usuario)
         {
-            await _connection.ExecuteAsync(
-                "spUsuarioCriar",
-                new
-                {
-                    usuario.Nome,
-                    usuario.Email,
-                    usuario.SenhaHash,
-                    usuario.CategoriaFavorita,
-                    usuario.OrcamentoMedio,
-                    usuario.LojaPreferida
+            var Id = await _connection.QuerySingleAsync<int>(
+                   "spUsuarioCriar",
+                   new
+                   {
+                       usuario.Nome,
+                       usuario.Email,
+                       usuario.SenhaHash,
+                       usuario.CategoriaFavorita,
+                       usuario.OrcamentoMedio,
+                       usuario.LojaPreferida
 
-                },
-                commandType: CommandType.StoredProcedure
-            );
+                   },
+                   commandType: CommandType.StoredProcedure
+               );
+            usuario.Id = Id;
         }
 
         public async Task AtualizarAsync(Usuario usuario)
@@ -83,5 +84,9 @@ namespace CortexCommerce.Repositorio.Interfaces
             usuario.HistoricoPesquisa = (await multi.ReadAsync<HistoricoPesquisa>()).ToList();
             return usuario;
         }
+    
+
     }
+    
+
 }

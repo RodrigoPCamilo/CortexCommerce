@@ -8,7 +8,7 @@ namespace CortexCommerce.Dominio.Entidades
 {
     public class Usuario
     {
-        public int Id { get; private set; }
+        public int Id { get; set; }
         public string Nome { get; private set; }
         public string Email { get; private set; }
         public string SenhaHash { get; private set; }

@@ -7,6 +7,7 @@ BEGIN
 
     SELECT 
         Id,
+        UsuarioId,
         Pergunta,
         RespostaGerada,
         Data
