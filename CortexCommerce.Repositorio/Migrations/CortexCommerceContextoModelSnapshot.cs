@@ -79,7 +79,6 @@ namespace CortexCommerce.Repositorio.Migrations
                         .HasColumnName("Email");
 
                     b.Property<int>("LojaPreferida")
-                        .HasMaxLength(200)
                         .HasColumnType("int")
                         .HasColumnName("LojaPreferida");
 

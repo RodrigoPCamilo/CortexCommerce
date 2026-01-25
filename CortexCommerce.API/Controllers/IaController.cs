@@ -23,7 +23,7 @@ namespace CortexCommerce.API.Controllers
         private readonly IIAService _iaService;
         private readonly IHistoricoPesquisaAplicacao _historicoPesquisaAplicacao;
 
-        public IaController(IUsuarioAplicacao usuarioAplicacao, IIAService iaService,IHistoricoPesquisaAplicacao historicoPesquisaAplicacao)
+        public IaController(IUsuarioAplicacao usuarioAplicacao, IIAService iaService, IHistoricoPesquisaAplicacao historicoPesquisaAplicacao)
         {
             _usuarioAplicacao = usuarioAplicacao;
             _iaService = iaService;
@@ -32,14 +32,15 @@ namespace CortexCommerce.API.Controllers
         [HttpPost("perguntar/{usuarioId}")]
         public async Task<IActionResult> Perguntar(int usuarioId, [FromBody] PerguntaDto dto)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            var usuario = await _usuarioAplicacao.ObterPorIdAsync(int.Parse(userId));
+
             if (string.IsNullOrEmpty(dto.Pergunta))
                 return BadRequest("A pergunta não pode ser vazia.");
-
-            var usuario = await _usuarioAplicacao.ObterPorIdAsync(usuarioId);
-
-            if (usuario == null)
-                return NotFound("Usuário não encontrado.");
-
             var pronpt = $@"
             Você é um especialista em e-commerce e comparação de preços.
 
@@ -67,22 +68,22 @@ namespace CortexCommerce.API.Controllers
             return Ok(new RespostaIaDto { Resposta = respostaIa });
         }
 
-        [HttpGet("historico/{usuarioId}")]
-        public async Task<IActionResult> Historico( int usuarioId)
+        [HttpGet("historico")]
+        public async Task<IActionResult> Historico()
         {
-            if (usuarioId <= 0)
-                return BadRequest("ID de usuário inválido.");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            var historico = await _historicoPesquisaAplicacao.ListarAsync(usuarioId);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
 
-            var retorno = historico.Select(h => new HistoricoPesquisaDto
+            var historico = await _historicoPesquisaAplicacao.ListarAsync(int.Parse(userId));
+
+            return Ok(historico.Select(h => new HistoricoPesquisaDto
             {
                 Pergunta = h.Pergunta,
                 RespostaGerada = h.RespostaGerada,
                 Data = h.Data
-            });
-            
-            return Ok(retorno);
+            }));
         }
     }
 }

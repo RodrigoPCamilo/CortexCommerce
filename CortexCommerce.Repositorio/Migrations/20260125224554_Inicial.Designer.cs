@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CortexCommerce.Repositorio.Migrations
 {
     [DbContext(typeof(CortexCommerceContexto))]
-    [Migration("20260121150759_Inicial")]
+    [Migration("20260125224554_Inicial")]
     partial class Inicial
     {
         /// <inheritdoc />
@@ -82,7 +82,6 @@ namespace CortexCommerce.Repositorio.Migrations
                         .HasColumnName("Email");
 
                     b.Property<int>("LojaPreferida")
-                        .HasMaxLength(200)
                         .HasColumnType("int")
                         .HasColumnName("LojaPreferida");
 
