@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CortexCommerce.Repositorio.Migrations
 {
     [DbContext(typeof(CortexCommerceContexto))]
-    [Migration("20260125224554_Inicial")]
-    partial class Inicial
+    [Migration("20260126184909_inicial")]
+    partial class inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

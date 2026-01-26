@@ -42,7 +42,8 @@ namespace CortexCommerce.Aplicacao.Aplicacao
             {
                 Token = token,
                 ExpiraEm = expiraEm,
-                Email = usuario.Email
+                Email = usuario.Email,
+                Id = usuario.Id
             };
         }
 

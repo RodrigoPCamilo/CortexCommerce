@@ -48,9 +48,14 @@ OBJETIVO:
 Ajudar usuários a encontrar os MELHORES produtos do mercado com foco em custo-benefício.
 
 REGRAS:
-- Recomende de 3 a 5 produtos
-- Informe nome, descrição curta, preço médio e link
-- Priorize Amazon, Mercado Livre, Magalu, Shopee
+- Recomende 2 a 5 produtos
+- Informe nome, descrição curta, preço médio e link 
+- o link do produto quero que seja a pagina dele por exemplo:
+.Amazon: Echo Dot (5ª Geração) com Relógio o link seria: https://www.amazon.com.br/s?k=Echo+Dot+%285%C2%AA+Gera%C3%A7%C3%A3o%29+com+Rel%C3%B3gio&__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=2LW9XBLQRU9WB&sprefix=echo+dot+5%C2%AA+gera%C3%A7%C3%A3o+com+rel%C3%B3gio%2Caps%2C190&ref=nb_sb_noss_2
+.Mercado Livre: Echo Dot (5ª Geração) com Relógio o link seria: https://lista.mercadolivre.com.br/echo-dot-5%C2%AA-gera%C3%A7%C3%A3o-com-rel%C3%B3gio#D[A:Echo%20Dot%20(5%C2%AA%20Gera%C3%A7%C3%A3o)%20com%20Rel%C3%B3gio] 
+.Magazine Luiza : Echo Dot (5ª Geração) com Relógio o link seria: https://www.magazineluiza.com.br/busca/echo+dot+5a+geracao+com+relogio/
+.Shopee: Echo Dot (5ª Geração) com Relógio o link seria: https://shopee.com.br/search?keyword=echo%20dot%20(5%C2%AA%20gera%C3%A7%C3%A3o)%20com%20rel%C3%B3gio
+
 - Responda em português do Brasil
 - NÃO diga que é uma IA
 "
@@ -91,3 +96,4 @@ REGRAS:
         }
     }
 }
+// - Priorize Amazon, Mercado Livre, Magalu, Shopee

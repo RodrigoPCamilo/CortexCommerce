@@ -10,5 +10,6 @@ namespace CortexCommerce.Aplicacao.DTOs.Login
         public string Token { get; set; }
         public DateTime ExpiraEm { get; set; }
         public string Email { get; set; }
+        public int Id { get; set; }
     }
 }
