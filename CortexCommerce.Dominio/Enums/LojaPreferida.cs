@@ -5,7 +5,7 @@ namespace CortexCommerce.Dominio.Enums
         Shopee,
         MercadoLivre,
         Amazon,
-        WhatsApp,
+        MagazineLuiza,
         LojaOficial
     }
 }

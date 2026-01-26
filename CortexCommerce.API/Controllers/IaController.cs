@@ -8,6 +8,7 @@ using CortexCommerce.Aplicacao.DTOs.Historico;
 using CortexCommerce.Aplicacao.DTOs.Usuario;
 using CortexCommerce.Aplicacao.Interfaces;
 using CortexCommerce.Dominio.Entidades;
+using CortexCommerce.Dominio.Enums;
 using CortexCommerce.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace CortexCommerce.API.Controllers
             Usuário: {usuario.Nome}
             Categoria favorita: {usuario.CategoriaFavorita}
             Orçamento médio: R$ {usuario.OrcamentoMedio}
-
+            Loja Preferida: {usuario.LojaPreferida}
             Pergunta do usuário:
             {dto.Pergunta}
 
